@@ -41,7 +41,7 @@ const [err, report] = ((f,m) => {
 
 ((it) => {
   const guid = "00000000-0000-0000-0000-000000000000"
-  const babbab= "babbabbab-babbab-babbab-babbab-babbabbab"
+  const babbab = "babbabbab-babbab-babbab-babbab-babbabbab"
   if (encode(guid) !== babbab) {
     err(it, "Encoding failed to pad the result")
   }
