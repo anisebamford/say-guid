@@ -8,9 +8,10 @@ or
  didzipkel-lubnag-pifdef-fodfuf-tawmikfuy?
 
 ## HOW IT DO
-Basically converts base 16 to base twelve hundred and something, then picks a 
-correlating syllable out of a list. I've gotten rid of a lot of the fun ones,
-and attempted to disallow syllables that were too similar.
+Basically converts base 16 to base sixteen hundred thirty something, then picks 
+twelve correlating syllable out of a list. I've gotten rid of a lot of the 
+fun ones, and attempted to disallow syllables that were too similar so that
+the words are a little bit reasonable.
 
 ## WHY THO?
 Because. Guids suck.
