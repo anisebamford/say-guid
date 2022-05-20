@@ -10,7 +10,6 @@ function defaultFormatDecoded(decodedTokenList) {
     }, "");
 }
 
-let sayGuid;
 const sayGuidFactory = (tokenList, tokenLength, formatEncodedTokenList = defaultFormatEncoded, formatDecodedTokenList = defaultFormatDecoded) => {
     const size = BigInt(tokenList.length);
     
@@ -49,18 +48,17 @@ const sayGuidFactory = (tokenList, tokenLength, formatEncodedTokenList = default
         return formatDecodedTokenList(decodedTokenList)
     }
 
-    sayGuid = {encode, decode};
+    return {encode, decode}
 }
 
 function withDefaultSettings() {
     const wordList = require("./tokenList.json");
-    sayGuidFactory(wordList, 3)
-    return sayGuid;
+    return sayGuidFactory(wordList, 3);
 }
 
 module.exports = {
     sayGuid: sayGuidFactory,
-    encode: sayGuid ? sayGuid.encode : withDefaultSettings().encode,
-    decode: sayGuid ? sayGuid.decode : withDefaultSettings().decode,
+    encode: withDefaultSettings().encode,
+    decode: withDefaultSettings().decode,
 }
 

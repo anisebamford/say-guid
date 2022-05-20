@@ -1,4 +1,4 @@
-const {encode, decode} = require("./index.js");
+const {encode, decode, sayGuid} = require("./index.js");
 const {exit} = require("process")
 
 const [err, report] = ((f,m) => {
@@ -49,5 +49,18 @@ const [err, report] = ((f,m) => {
     err(it, "Decoding failed to pad the result")
   }
 })("It should pad the start of small numbers");
+
+((it) => {
+  const wordList = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-~".split("");
+  const guid = "a634cdd3-a50e-4383-bfa5-cc37fd126194";
+  const {encode, decode} = sayGuid(wordList, 1, (list) => list.join("-"), (list) => list.join("-"));
+  if (encode(guid) !== "1-U-W-4-5-6-J-F-m-3-v-y-Y-_-V-F-c-T-S-E-k-h") {
+    err(it, "Failed to encode with custom settings")
+  }
+  if (decode(encode(guid)) !== guid.replace(/-/g, "").split("").join("-")) {
+    err(it, "Failed to decode with custom settings");
+  }
+
+})("It should accept configuration");
 
 report()
