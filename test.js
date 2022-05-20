@@ -17,6 +17,7 @@ const [err, report] = ((f,m) => {
         m[k].forEach((x) => console.error(x));
       });
       if (f) exit(1);
+      console.log("All tests pass");
     }
   ]
 })(false,{});
@@ -40,7 +41,7 @@ const [err, report] = ((f,m) => {
 
 ((it) => {
   const guid = "00000000-0000-0000-0000-000000000000"
-  const babbab= "babbabbab-babbab-babbab-babbabbab"
+  const babbab= "babbabbab-babbab-babbab-babbab-babbabbab"
   if (encode(guid) !== babbab) {
     err(it, "Encoding failed to pad the result")
   }
