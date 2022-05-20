@@ -9,7 +9,7 @@ or
 
 ## HOW IT DO
 Basically converts base 16 to base sixteen hundred thirty something, then picks 
-twelve correlating syllable out of a list. I've gotten rid of a lot of the 
+twelve correlating syllables out of a list. I've gotten rid of a lot of the 
 fun ones, and attempted to disallow syllables that were too similar so that
 the words are a little bit reasonable.
 
