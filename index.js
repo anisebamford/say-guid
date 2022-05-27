@@ -51,14 +51,19 @@ const sayGuidFactory = (tokenList, tokenLength, formatEncodedTokenList = default
     return {encode, decode}
 }
 
-function withDefaultSettings() {
+function babbab() {
     const wordList = require("./tokenList.json");
     return sayGuidFactory(wordList, 3);
 }
 
+function base64url() {
+  const wordList = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_".split("")
+  return sayGuidFactory(wordList, 1);
+}
+
 module.exports = {
     sayGuid: sayGuidFactory,
-    encode: withDefaultSettings().encode,
-    decode: withDefaultSettings().decode,
+    babbab,
+    base64url,
 }
 
