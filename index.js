@@ -1,69 +1,66 @@
-function defaultFormatEncoded(encodedTokenList) {
+const tokenList = require("./babbab");
+
+function formatEncoded(encodedTokenList) {
     return encodedTokenList.reduce((acc, val, idx) => {
         return acc + val + ([2, 4, 6, 8].includes(idx) ? "-" : "")
     }, "")
 }
 
-function defaultFormatDecoded(decodedTokenList) {
+function formatDecoded(decodedTokenList) {
     return decodedTokenList.reduce((acc, val, idx) => {
         return acc + val + ([7, 11, 15, 19].includes(idx) ? "-" : "")
     }, "");
 }
 
-const sayGuidFactory = (tokenList, tokenLength, formatEncodedTokenList = defaultFormatEncoded, formatDecodedTokenList = defaultFormatDecoded) => {
-    const size = BigInt(tokenList.length);
-    
-    function encode(guid) {
-        guid = guid.replace(/-/g, "");
-        const encodedTokenList = [];
-        let value = BigInt("0x" + guid);
-        
-        while (value >= size) {
-            const tokenValue = value % size;
-            value = value / size;
-            encodedTokenList.unshift(tokenList[Number(tokenValue)]);
-        }
-        
-        encodedTokenList.unshift(tokenList[Number(value)]);
+const size = BigInt(tokenList.length);
 
-        while(encodedTokenList.length < 12) {
-            encodedTokenList.unshift(tokenList[0])
-        }
-        return formatEncodedTokenList(encodedTokenList);
-    }
-    
-    function decode(word) {
-        const decodedTokenList = word
-            .replace(/-/g, "")
-            .match(new RegExp(`.{1,${tokenLength}}`, "g"))
-            .map(i => BigInt(tokenList.indexOf(i)))
-            .reduce((acc, val) => acc * size + val, 0n)
-            .toString(16)
-            .split("");
+const dashMatcherShape = /-/g
+const stripFormatting = word => word.replace(dashMatcherShape, "")
+const splitTokenShape = /.{1,3}/g
 
-        while (decodedTokenList.length < 32) {
-            decodedTokenList.unshift(0);
-        }
+function encode(guid) {
+    guid = stripFormatting(guid);
+    const encodedTokenList = [];
+    let value = BigInt("0x" + guid);
 
-        return formatDecodedTokenList(decodedTokenList)
+    while (value >= size) {
+        const tokenValue = value % size;
+        value = value / size;
+        encodedTokenList.unshift(tokenList[Number(tokenValue)]);
     }
 
-    return {encode, decode}
+    encodedTokenList.unshift(tokenList[Number(value)]);
+
+    while(encodedTokenList.length < 12) {
+        encodedTokenList.unshift(tokenList[0])
+    }
+    return formatEncoded(encodedTokenList);
 }
 
-function babbab() {
-    const wordList = require("./tokenList.json");
-    return sayGuidFactory(wordList, 3);
-}
+function decode(word) {
+    word = stripFormatting(word)
+    let decodedTokenList = word
+        .match(splitTokenShape);
 
-function base64url() {
-  const wordList = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_".split("")
-  return sayGuidFactory(wordList, 1);
+    decodedTokenList = decodedTokenList.map(i => {
+        const found = BigInt(tokenList.indexOf(i))
+        if (found === -1n) {
+            throw new Error(`Word ${i} not found in word list`)
+        }
+        return found
+    })
+        .reduce((acc, val) => acc * size + val, 0n)
+        .toString(16)
+        .split("");
+
+    while (decodedTokenList.length < 32) {
+        decodedTokenList.unshift(0);
+    }
+
+    return formatDecoded(decodedTokenList)
 }
 
 module.exports = {
-    sayGuid: sayGuidFactory,
-    babbab,
-    base64url,
+    encode,
+    decode
 }
-
