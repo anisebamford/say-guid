@@ -1,6 +1,6 @@
 {
   "name": "say-guid",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Converts a guid into something you can say, if you try hard enough. It tries not to swear. Let me know what perversities it comes up with.",
   "main": "index.js",
   "scripts": {
