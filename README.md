@@ -18,7 +18,7 @@ Because. Guids suck.
 
 ## CAN I ...?
 Yes.
-If you want to use a custom word list, call sayGuid(wordList, wordLength, formatEncoded, formatDecoded)
+
 
 
 
